@@ -7,7 +7,6 @@ pragma solidity ^0.8.9;
 // We import this library to be able to use console.log
 import "hardhat/console.sol";
 
-
 // This is the main building block for smart contracts.
 contract Token {
     // Some string type variables to identify the token.
@@ -74,6 +73,16 @@ contract Token {
      */
     function balanceOf(address account) external view returns (uint256) {
         return balances[account];
+    }
+
+    /**
+     * Read only function to retrieve the total supply of tokens.
+     *
+     * The `view` modifier indicates that it doesn't modify the contract's
+     * state, which allows us to call it without executing a transaction.
+     */
+    function getTotalSupply() external view returns (uint256) {
+        return totalSupply;
     }
 
     // เขียนฟังก์ชันสำหรับแสดงข้อมูล totalSupply ด้านล่างและเรียกใช้งานเพื่อแสดงให้หน้าแรกของ UI

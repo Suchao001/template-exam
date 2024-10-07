@@ -51,6 +51,7 @@ export class Dapp extends React.Component {
       txBeingSent: undefined,
       transactionError: undefined,
       networkError: undefined,
+      totalSupply: undefined, // Add this line
     };
 
     this.state = this.initialState;
@@ -80,9 +81,9 @@ export class Dapp extends React.Component {
       );
     }
 
-    // If the token data or the user's balance hasn't loaded yet, we show
+    // If the token data, user's balance, or total supply hasn't loaded yet, we show
     // a loading component.
-    if (!this.state.tokenData || !this.state.balance) {
+    if (!this.state.tokenData || !this.state.balance || !this.state.totalSupply) {
       return <Loading />;
     }
 
@@ -100,6 +101,9 @@ export class Dapp extends React.Component {
                 {this.state.balance.toString()} {this.state.tokenData.symbol}
               </b>
               .
+            </p>
+            <p>
+              Total Supply: <b>{this.state.totalSupply.toString()} {this.state.tokenData.symbol}</b>
             </p>
           </div>
         </div>
@@ -250,8 +254,9 @@ export class Dapp extends React.Component {
   async _getTokenData() {
     const name = await this._token.name();
     const symbol = await this._token.symbol();
+    const totalSupply = await this._token.getTotalSupply(); // Add this line
 
-    this.setState({ tokenData: { name, symbol } });
+    this.setState({ tokenData: { name, symbol }, totalSupply }); // Update this line
   }
 
   async _updateBalance() {
